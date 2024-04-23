@@ -1,7 +1,7 @@
 import math
 
 
-# calculate the number of guesses allowed
+# calculate the maximum number of guesses
 def calc_guesses(low, high):
     num_range = high - low + 1
     max_raw = math.log2(num_range)
@@ -10,7 +10,7 @@ def calc_guesses(low, high):
     return max_guesses
 
 
-# Automated testing is below in the form (test_case, expected_value)
+# Automated testing
 to_test = [
     (1, 10, 5),
     (1, 20, 6),
@@ -18,14 +18,14 @@ to_test = [
     (1, 1000, 11),
 ]
 
-# run tests!
+# run tests
 for item in to_test:
     # retrieve test case and expected value
     low_num = item[0]
     high_num = item[1]
     expected = item[2]
 
-    # get actual value (ie: test ticket function)
+    # get real value
     actual = calc_guesses(low_num, high_num)
 
     # compare actual and expected and output pass / fail

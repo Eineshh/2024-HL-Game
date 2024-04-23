@@ -2,7 +2,7 @@ import math
 import random
 
 
-# checks users enter yes (y) or no (n)
+# checks users have entered yes (y) or no (n)
 def yes_no(question):
     while True:
         response = input(question).lower()
@@ -14,47 +14,38 @@ def yes_no(question):
         elif response == "no" or response == "n":
             return "no"
         else:
-            print("Please enter yes / no")
+            print("Please enter Yes or No")
 
 
 def instruction():
     print('''
+✦✦✦ Instructions ✦✦✦
 
-**** Instructions ****
-
-To begin, choose the number of rounds and either customise 
-the game parameters or go with the default game (where the 
-secret number will be between 1 and 100).
-
-Then choose how many rounds you'd like to play <enter> for 
+To begin with, choose the number of desired rounds, pressing <enter> for 
 infinite mode.
 
-Your goal is to try to guess the secret number without 
-running out of guesses.
+Next, either customize the game parameters or choose the default option
+(the secret number will be between 1 and 100).
 
- Good luck.   
+Your goal is to guess the secret number without running out of guesses. 
 
+Have fun!
     ''')
 
 
-# checks for an integer with optional upper /
-# lower limits and an optional exit code for infinite mode
-# / quitting the game
+# checks for an integer with optional upper / lower limits and exit code for infinite mode / quitting the game
 def int_check(question, low=None, high=None, exit_code=None):
     # if any integer is allowed...
     if low is None and high is None:
-        error = "Please enter an integer"
+        error = "Please enter an Integer"
 
-    # if the number needs to be more than an
-    # integer (ie: rounds / 'high number')
+    # if the number needs to be more than an integer (ie: rounds / 'high number')
     elif low is not None and high is None:
-        error = (f"Please enter an integer that is "
-                 f"more than / equal to {low}")
+        error = f"Please enter an Integer that is more than / equal to {low}"
 
     # if the number needs to between low & high
     else:
-        error = (f"Please enter an integer that"
-                 f" is between {low} and {high} (inclusive)")
+        error = f"Please enter an Integer that is between {low} and {high} (inclusive)"
 
     while True:
         response = input(question).lower()
@@ -97,49 +88,53 @@ def calc_guesses(low, high):
 mode = "regular"
 rounds_played = 0
 
-print("🔼🔼🔼 Welcome to the Higher Lower Game 🔻🔻🔻")
-print()
+print("✨✨ Welcome to the Higher Lower Game ✨✨")
 
-want_instructions = yes_no("Do you want to read the instructions? ")
+print()
+want_instructions = yes_no("Do you want to read the instructions?: ")
 
 # checks users enter yes (y) or no (n)
 if want_instructions == "yes":
     instruction()
 
 # Ask user for number of rounds / infinite mode
-num_rounds = int_check("Rounds <enter for infinite>: ",
+num_rounds = int_check("Rounds? (Push <enter> for infinite mode): ",
                        low=1, exit_code="")
 
 if num_rounds == "":
     mode = "infinite"
     num_rounds = 5
 
-# Get Game parameters
-low_num = int_check("Low Number? ")
-high_num = int_check("High Number? ", low=low_num + 1)
 
+# allow user to choose the high / low number
+else:
+    low_num = int_check("Low Number?: ")
+    high_num = int_check("High Number?: ", low=low_num + 1)
+
+# calculate the maximum number of guesses based on the low and high number
 guesses_allowed = calc_guesses(low_num, high_num)
 
 # Game loop starts here
 while rounds_played < num_rounds:
 
-    # Rounds headings (based on mode)
+    # Rounds headings
     if mode == "infinite":
-        rounds_heading = f"\n♾♾♾ Round {rounds_played + 1} (Infinite Mode) ♾♾♾"
+        rounds_heading = f"\n⭐⭐ Round {rounds_played + 1} (Infinite Mode) ⭐⭐"
     else:
-        rounds_heading = f"\n💿💿💿 Round {rounds_played + 1} of {num_rounds} 💿💿💿"
+        rounds_heading = f"\n⭐⭐ Round {rounds_played + 1} of {num_rounds} ⭐⭐"
 
     print(rounds_heading)
-    # get user choice
+
+    # get the user's choice
     user_choice = input("Choose: ")
 
-    # If user choice is the exit code, break the loop
+    # if the user choice is exit code, break the loop
     if user_choice == "xxx":
         break
 
     rounds_played += 1
 
-    # if users are in infinite mode, increase number of rounds!
+    # if the user is in infinite mode, increase the rounds
     if mode == "infinite":
         num_rounds += 1
 
